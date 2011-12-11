@@ -1,0 +1,219 @@
+<!doctype html>
+
+<!--
+	~ jquery.mb.components
+	~ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+	~ email: mbicocchi@open-lab.com
+	~ site: http://pupunzi.com
+	~
+	~ Licences: MIT, GPL
+	~ http://www.opensource.org/licenses/mit-license.php
+	~ http://www.gnu.org/licenses/gpl.html
+	-->
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>mb.CSSAnimate</title>
+
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+<style type="text/css">
+
+	body{
+		margin: 0;
+		white-space: inherit;
+		background: #ffcc00;
+		font: 16px/19px 'Ubuntu Mono', sans-serif;
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
+	#wrapper, #links{
+		position: relative;
+		margin: auto;
+		width:900px;
+	}
+	h1{
+		margin-top: 80px;
+		padding:50px 0;
+	}
+	a{
+		color: white;
+		text-decoration: none;
+	}
+	a:hover{
+		color: #000000;
+		text-decoration: none;
+	}
+
+
+	.test{
+		top:0;
+		left:0;
+		position:absolute;
+		width:10px;
+		height:10px;
+		background:#fff;
+		box-shadow: 0 0 5px rgba(0,0,0,0.5);
+		border-radius:10px;
+		box-sizing: border-box;
+	}
+
+	pre{
+		overflow: auto;
+		width: 100%;
+		font: 12px/14px 'Ubuntu Mono', sans-serif;
+		background: rgba(255,255,255,.5);
+		margin: 0;
+		padding: 0;
+	}
+
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
+<script type="text/javascript">
+
+	$.fn.test = function() {
+
+		var cH = $(window).height();
+		var cW = $(window).width();
+
+		return this.each(function() {
+      var el = $(this);
+
+      var w = 30 * Math.floor((Math.random() * 15));
+      var h = 30 * Math.floor((Math.random() * 15));
+
+      var t = Math.floor(Math.random() * (cH-h));
+      var l = Math.floor(Math.random() * (cW-w));
+      var r = Math.floor(Math.random() * 360);
+      var duration = 1000 + Math.floor((Math.random() * 10000));
+
+      //here is the CSSAnimate :-)
+      el.CSSAnimate({
+      top: t,
+      left: l,
+      width: w,
+      height: h,
+      "border-radius":Math.floor(Math.random() * 100),
+      "transform":"rotate("+r+"deg)",
+      "transform-origin":"50% 50%",
+      "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
+      }, duration, "ease-out", "all", function() {
+      el.test();
+      })
+		})
+	};
+
+	$.fn.printHTML=function(){
+		return this.each(function(){
+      var content=$(this).html();
+      content=content.replace(/</g,"&lt;");
+      content=content.replace(/>/g,"&gt;");
+      $(this).html(content);
+		})
+	};
+
+
+	$(function(){
+
+		if (self.location.href == top.location.href){
+      var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:10px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+      $("body").append(logo);
+      $("#logo").fadeIn();
+		}
+
+
+		$(".elements .test").test();
+
+
+
+		$("[data-code=true]").printHTML();
+	});
+
+</script>
+
+</head>
+<body>
+<a href="https://github.com/pupunzi"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="elements">
+	<div class="test one"></div>
+	<div class="test two"></div>
+	<div class="test three"></div>
+
+	<div class="test one"></div>
+	<div class="test two"></div>
+	<div class="test three"></div>
+
+	<div class="test one"></div>
+	<div class="test two"></div>
+	<div class="test three"></div>
+
+	<div class="test one"></div>
+	<div class="test two"></div>
+	<div class="test three"></div>
+</div>
+
+<div id="wrapper">
+	<h1>jquery.mb.CSSAnimate demo</h1>
+	<div id="links">
+		<p>
+      Animate using CSS3 transition instead of the default jQuery.animate method.<br>
+      It provides a fallback to the default animate method if CSS3 is not supported by the browser.
+      <br>
+      <a href="inc/jquery.mb.CSSAnimate.js" target="_blank"> Get the code</a>
+		</p>
+		<p>here is the call for this example:
+		<pre>
+		<code>
+
+       <b>the "DIV" code:</b>
+      <div data-code=true>
+      <div class="test"></div>
+      </div>
+      <b>the function:</b>
+      
+      $.fn.test = function() {
+        var cH = $(window).height();
+        var cW = $(window).width();
+        return this.each(function() {
+            var el = $(this);
+            var w = 30 * (Math.random() * 15);
+            var h = 30 * (Math.random() * 15);
+            var t = Math.floor(Math.random() * (cH-h));
+            var l = Math.floor(Math.random() * (cW-w));
+            var r = Math.floor(Math.random() * 360);
+            var duration = 1000 + (Math.random() * 3000);
+
+            //here is the CSSAnimate :-)
+            el.CSSAnimate({
+            top: t,
+            left: l,
+            width: w,
+            height: h,
+            "border-radius":Math.floor(Math.random() * 100),
+            "transform":"rotate("+r+"deg)",
+            "transform-origin":"50% 50%",
+            "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
+            }, duration, "ease-out", "all", function() {
+            el.test();
+            })
+        })
+      };
+
+      $(".test").test();
+
+
+		</code>
+		</pre>
+		</p>
+		<p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>
+	</div>
+
+</div>
+
+
+
+</body>
+</html>
