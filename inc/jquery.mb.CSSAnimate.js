@@ -29,7 +29,7 @@
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
  @duration   -> an int for the animation duration in milliseconds
  @ease       -> ease  ||  linear || ease-in || ease-out || ease-in-out  ||  cubic-bezier(<number>, <number>,  <number>,  <number>)
- @properties -> properties to wich CSS3 transition should be applied.
+ @properties -> properties to which CSS3 transition should be applied.
  @callback   -> a callback function called once the transition end
 
  example:
