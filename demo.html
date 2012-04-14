@@ -83,7 +83,6 @@
 
       var w = 30 * Math.floor((Math.random() * 15));
       var h = 30 * Math.floor((Math.random() * 15));
-
       var t = Math.floor(Math.random() * (cH-h));
       var l = Math.floor(Math.random() * (cW-w));
       var r = Math.floor(Math.random() * 360);
@@ -107,27 +106,22 @@
 
 	$.fn.printHTML=function(){
 		return this.each(function(){
-      var content=$(this).html();
+      var $el = $(this);
+      var content=$el.html();
       content=content.replace(/</g,"&lt;");
       content=content.replace(/>/g,"&gt;");
-      $(this).html(content);
+      $el.html(content);
 		})
 	};
 
-
 	$(function(){
-
 		if (self.location.href == top.location.href){
       var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:10px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
       $("body").append(logo);
       $("#logo").fadeIn();
 		}
 
-
 		$(".elements .test").test();
-
-
-
 		$("[data-code=true]").printHTML();
 	});
 
@@ -203,7 +197,6 @@
       };
 
       $(".test").test();
-
 
 		</code>
 		</pre>
