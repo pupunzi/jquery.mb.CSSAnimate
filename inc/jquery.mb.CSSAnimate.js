@@ -3,17 +3,19 @@
  Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
  email: mbicocchi@open-lab.com
  site: http://pupunzi.com
+ blog: http://pupunzi.open-lab.com
 
  Licences: MIT, GPL
  http://www.opensource.org/licenses/mit-license.php
  http://www.gnu.org/licenses/gpl.html
+
  ******************************************************************************/
 
 /*
  *
  * jQuery.mb.components: jquery.mb.CSSAnimate
- * version: 1.5
- * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
+ * version: 1.0- 04/12/11 - 18
+ * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
  *
  * Licences: MIT, GPL
  * http://www.opensource.org/licenses/mit-license.php
@@ -43,10 +45,11 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
 
     if (el.length === 0 || !opt) {return;}
 
-    if (typeof duration == "function") {callback = duration;}
-    if (typeof delay == "function") {callback = delay;}
-    if (typeof ease == "function") {callback = ease;}
-    if (typeof properties == "function") {callback = properties;}
+    if (typeof duration == "function") {callback = duration; duration = $.fx.speeds["_default"];}
+    if (typeof delay == "function") {callback = delay; delay=0}
+    if (typeof ease == "function") {callback = ease; ease = "cubic-bezier(0.65,0.03,0.36,0.72)";}
+    if (typeof properties == "function") {callback = properties; properties = "all";}
+
 
     if(typeof duration == "string"){
       for(var d in $.fx.speeds){
@@ -59,15 +62,26 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
       }
     }
 
-    if (!duration) {duration = $.fx.speeds["_default"];}
-    if (!ease) {ease = "cubic-bezier(0.65,0.03,0.36,0.72)";}
-    if (!properties) {properties = "all";}
-    if (!delay) {delay = 0;}
 
     //http://cssglue.com/cubic
     //  ease  |  linear | ease-in | ease-out | ease-in-out  |  cubic-bezier(<number>, <number>,  <number>,  <number>)
 
     if (!jQuery.support.transition) {
+
+      for(var o in opt){
+        if (o==="transform"){
+          delete opt[o];
+        }
+      }
+
+      for(var o in opt){
+        if (opt[o]==="auto"){
+          delete opt[o];
+        }
+      }
+      if(!callback || typeof callback==="string")
+        callback ="linear";
+
       el.animate(opt, duration, callback);
       return;
     }
@@ -103,17 +117,25 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
     el.css(sfx + "transition-duration", duration + "ms");
     el.css(sfx + "transition-delay", delay + "ms");
     el.css(sfx + "transition-timing-function", ease);
+    el.css(sfx + "backface-visibility","hidden");
 
     setTimeout(function() {
       el.css(opt);
-    }, 1);
+    }, 10);
 
-    var endTransition = function() {
-      el.get(0).removeEventListener(transitionEnd, endTransition, false);
-      el.css(sfx + "transition", "");
+    var endTransition = function(e) {
+      this.removeEventListener(transitionEnd, endTransition, false);
+      $(this).css(sfx + "transition", "");
+//      $(this).css(sfx + "backface-visibility", "visible");
+      e.stopPropagation();
+
       if (typeof callback == "function") callback();
+
+      return false;
     };
-    el.get(0).addEventListener(transitionEnd, endTransition, false);
+
+    this.addEventListener(transitionEnd, endTransition, false);
+    this.addEventListener(transitionEnd, endTransition, false);
   })
 };
 
