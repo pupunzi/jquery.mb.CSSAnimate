@@ -113,10 +113,6 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
       }
     }
 
-    if (properties === "transform")
-      properties = sfx+properties;
-
-
     el.css(sfx + "transition-property", properties);
     el.css(sfx + "transition-duration", duration + "ms");
     el.css(sfx + "transition-delay", delay + "ms");
