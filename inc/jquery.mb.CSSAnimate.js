@@ -123,9 +123,9 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
 
     setTimeout(function() {
       el.css(opt);
-      el.unbind(transitionEnd+".cssanim");
+      el.off(transitionEnd+".cssanim");
       var endTransition = function(e) {
-        el.unbind(transitionEnd+".cssanim");
+        el.off(transitionEnd+".cssanim");
         el.css(sfx + "transition", "");
         if (typeof callback == "function"){
           callback();
@@ -133,7 +133,7 @@ $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
         e.stopPropagation();
         return false;
       };
-      el.bind(transitionEnd+".cssanim", endTransition);
+      el.on(transitionEnd+".cssanim", endTransition);
     }, 10);
 
   })
@@ -156,7 +156,7 @@ $.fn.CSSAnimateStop=function(){
     transitionEnd = "msTransitionEnd";
   }
   $(this).css(sfx + "transition", "");
-  $(this).unbind(transitionEnd+".cssanim");
+  $(this).off(transitionEnd+".cssanim");
 
 };
 
