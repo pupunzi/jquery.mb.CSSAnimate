@@ -37,6 +37,8 @@
  $(this).CSSAnimate({top: t, left:l, width:w, height:h}, 2000, "ease-out", "all", function() {el.anim();})
  */
 
+
+
 /*Browser detection patch*/
 $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase());
 $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
