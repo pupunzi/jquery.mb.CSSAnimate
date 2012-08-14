@@ -14,8 +14,8 @@
 /*
  *
  * jQuery.mb.components: jquery.mb.CSSAnimate
- * version: 1.0- 04/12/11 - 18
- * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
+ * version: 1.5
+ * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
  * Licences: MIT, GPL
  * http://www.opensource.org/licenses/mit-license.php
@@ -37,6 +37,15 @@
  $(this).CSSAnimate({top: t, left:l, width:w, height:h}, 2000, "ease-out", "all", function() {el.anim();})
  */
 
+<<<<<<< HEAD
+=======
+/*Browser detection patch*/
+$.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase());
+$.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+$.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+
+>>>>>>> browser detection patch
 $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
   return this.each(function() {
 
