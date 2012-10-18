@@ -45,6 +45,15 @@
 		text-decoration: none;
 	}
 
+	.elements{
+		top:0;
+		left:0;
+		position:fixed;
+		width:100%;
+		height:100%;
+		box-sizing: border-box;
+	}
+
 
 	.test{
 		top:0;
@@ -98,7 +107,7 @@
       "transform":"rotate("+r+"deg)",
       "transform-origin":"50% 50%",
       "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
-      }, duration,0, "ease-out", "all", function() {
+      }, duration,0, "ease-out",function() {
       el.test();
       })
 		})
@@ -129,13 +138,9 @@
 
 </head>
 <body>
-<a href="https://github.com/pupunzi"><img style="width:200px; position: absolute; top: 0; right: 0; border: 0;" src="http://upload.wikimedia.org/wikipedia/commons/b/b3/GitHub.svg" alt="Fork me on GitHub"></a>
+<a href="https://github.com/pupunzi"><img style="width:100px; position: absolute; top: 20px; right: 20px; border: 0;" src="http://upload.wikimedia.org/wikipedia/commons/b/b3/GitHub.svg" alt="Fork me on GitHub"></a>
 
 <div class="elements">
-	<div class="test one"></div>
-	<div class="test two"></div>
-	<div class="test three"></div>
-
 	<div class="test one"></div>
 	<div class="test two"></div>
 	<div class="test three"></div>
@@ -164,7 +169,23 @@
 
        <b>the "DIV" code:</b>
       <div data-code=true>
-      <div class="test"></div>
+      <div class="test">
+				<div class="test one"></div>
+				<div class="test two"></div>
+				<div class="test three"></div>
+
+				<div class="test one"></div>
+				<div class="test two"></div>
+				<div class="test three"></div>
+
+				<div class="test one"></div>
+				<div class="test two"></div>
+				<div class="test three"></div>
+
+				<div class="test one"></div>
+				<div class="test two"></div>
+				<div class="test three"></div>
+      </div>
       </div>
       <b>the function:</b>
       
@@ -190,7 +211,7 @@
             "transform":"rotate("+r+"deg)",
             "transform-origin":"50% 50%",
             "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
-            }, duration, "ease-out", "all", function() {
+            }, duration, "ease-out", function() {
             el.test();
             })
         })
