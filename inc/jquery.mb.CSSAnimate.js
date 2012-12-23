@@ -180,7 +180,7 @@ jQuery.fn.CSSAnimateStop=function(){
 
 	jQuery(this).css(sfx + "transition", "");
 	jQuery(this).off(transitionEnd);
-}
+};
 
 // jQuery.support.transition
 // to verify that CSS3 transition is supported (or any of its browser-specific implementations)
