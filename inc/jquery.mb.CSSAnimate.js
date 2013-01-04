@@ -45,25 +45,36 @@ jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
-jQuery.fn.CSSAnimate = function(opt, duration, delay, ease, callback) {
-	return this.each(function() {
+jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
+	return this.each(function () {
 
 		var el = jQuery(this);
 
-		if (el.length === 0 || !opt) {return;}
+		if (el.length === 0 || !opt) {
+			return;
+		}
 
-		if (typeof duration == "function") {callback = duration; duration = jQuery.fx.speeds["_default"];}
-		if (typeof delay == "function") {callback = delay; delay=0}
-		if (typeof ease == "function") {callback = ease; ease = "cubic-bezier(0.65,0.03,0.36,0.72)";}
+		if (typeof duration == "function") {
+			callback = duration;
+			duration = jQuery.fx.speeds["_default"];
+		}
+		if (typeof delay == "function") {
+			callback = delay;
+			delay = 0
+		}
+		if (typeof ease == "function") {
+			callback = ease;
+			ease = "cubic-bezier(0.65,0.03,0.36,0.72)";
+		}
 
 
-		if(typeof duration == "string"){
-			for(var d in jQuery.fx.speeds){
-				if(duration==d){
-					duration= jQuery.fx.speeds[d];
+		if (typeof duration == "string") {
+			for (var d in jQuery.fx.speeds) {
+				if (duration == d) {
+					duration = jQuery.fx.speeds[d];
 					break;
-				}else{
-					duration=null;
+				} else {
+					duration = null;
 				}
 			}
 		}
@@ -73,20 +84,20 @@ jQuery.fn.CSSAnimate = function(opt, duration, delay, ease, callback) {
 
 		if (!jQuery.support.transition) {
 
-			for(var o in opt){
-				if (o==="transform"){
+			for (var o in opt) {
+				if (o === "transform") {
 					delete opt[o];
 				}
-				if (o==="transform-origin"){
+				if (o === "transform-origin") {
 					delete opt[o];
 				}
-				if (opt[o]==="auto"){
+				if (opt[o] === "auto") {
 					delete opt[o];
 				}
 			}
 
-			if(!callback || typeof callback==="string")
-				callback ="linear";
+			if (!callback || typeof callback === "string")
+				callback = "linear";
 
 			el.animate(opt, duration, callback);
 			return;
@@ -109,22 +120,22 @@ jQuery.fn.CSSAnimate = function(opt, duration, delay, ease, callback) {
 		}
 
 		var prop = [];
-		for(var o in opt){
+		for (var o in opt) {
 			var key = o;
-			if (key==="transform"){
-				key = sfx+"transform";
-				opt[key]=opt[o];
+			if (key === "transform") {
+				key = sfx + "transform";
+				opt[key] = opt[o];
 				delete opt[o];
 			}
-			if (key==="transform-origin"){
-				key = sfx+"transform-origin";
-				opt[key]=opt[o];
+			if (key === "transform-origin") {
+				key = sfx + "transform-origin";
+				opt[key] = opt[o];
 				delete opt[o];
 			}
 			prop.push(key);
 
-			if(!el.css(key))
-				el.css(key,0);
+			if (!el.css(key))
+				el.css(key, 0);
 		}
 		var properties = prop.join(",");
 
@@ -132,37 +143,37 @@ jQuery.fn.CSSAnimate = function(opt, duration, delay, ease, callback) {
 		el.css(sfx + "transition-duration", duration + "ms");
 		el.css(sfx + "transition-delay", delay + "ms");
 		el.css(sfx + "transition-timing-function", ease);
-		el.css(sfx + "backface-visibility","hidden");
+		el.css(sfx + "backface-visibility", "hidden");
 
-		setTimeout(function() {
+		setTimeout(function () {
 			el.css(opt);
 		}, 0);
 
-		var endTransition = function(e) {
+		var endTransition = function (e) {
 			el.off(transitionEnd);
 			el.css(sfx + "transition", "");
 			e.stopPropagation();
-			if (typeof callback == "function"){
-				el.called =true;
+			if (typeof callback == "function") {
+				el.called = true;
 				callback();
 			}
 			return false;
 		};
 
 		//if there's no transition than call the callback anyway
-		setTimeout(function(){
-			if(el.called || !callback){
+		setTimeout(function () {
+			if (el.called || !callback) {
 				el.called = false;
 				return;
 			}
 			callback();
-		},duration+20);
+		}, duration + 20);
 
 		el.on(transitionEnd, endTransition);
 	})
 };
 
-jQuery.fn.CSSAnimateStop=function(){
+jQuery.fn.CSSAnimateStop = function () {
 	var sfx = "";
 	var transitionEnd = "transitionEnd";
 	if (jQuery.browser.webkit) {
@@ -185,7 +196,7 @@ jQuery.fn.CSSAnimateStop=function(){
 
 // jQuery.support.transition
 // to verify that CSS3 transition is supported (or any of its browser-specific implementations)
-jQuery.support.transition = (function() {
+jQuery.support.transition = (function () {
 	var thisBody = document.body || document.documentElement;
 	var thisStyle = thisBody.style;
 	return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
