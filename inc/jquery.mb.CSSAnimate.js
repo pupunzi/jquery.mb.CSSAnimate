@@ -14,14 +14,11 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 09/01/13 21.05
  *  *****************************************************************************
  */
 
 /*
- *
- * jQuery.mb.components: jquery.mb.CSSAnimate
- * version: 1.6
  *  params:
 
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
@@ -31,7 +28,7 @@
 
  example:
 
- jQuery(this).CSSAnimate({top: t, left:l, width:w, height:h}, 2000, "ease-out", "all", function() {el.anim();})
+ jQuery(this).CSSAnimate({top: t, left:l, width:w, height:h}, 2000, "ease-out", callback;})
  */
 
 
