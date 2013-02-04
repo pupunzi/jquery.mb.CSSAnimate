@@ -14,22 +14,23 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 16/01/13 22.55
+ *  last modified: 04/02/13 22.35
  *  *****************************************************************************
  */
 
 /*
- * version: 1.5
+ * version: 1.6
  *  params:
 
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
  @duration   -> an int for the animation duration in milliseconds
+ @delay      -> an int for the animation delay in milliseconds
  @ease       -> ease  ||  linear || ease-in || ease-out || ease-in-out  ||  cubic-bezier(<number>, <number>,  <number>,  <number>)
  @callback   -> a callback function called once the transition end
 
  example:
 
- jQuery(this).CSSAnimate({top: t, left:l, width:w, height:h}, 2000, "ease-out", callback;})
+ jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, transform: 'rotate(50deg) scale(.8)'}, 2000, 100, "ease-out", callback;})
  */
 
 
@@ -40,6 +41,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 	return this.each(function () {
 
 		var el = jQuery(this);
+
+		this.id = this.id || "CSSA_" + new Date().getTime();
 
 		if (el.length === 0 || !opt) {
 			return;
@@ -125,42 +128,54 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 			prop.push(key);
 
-			if (!el.css(key))
-				el.css(key, 0);
+//			if (!el.css(key))
+//				el.css(key, 0);
 		}
 		var properties = prop.join(",");
 
-		el.css(sfx + "transition-property", properties);
-		el.css(sfx + "transition-duration", duration + "ms");
-		el.css(sfx + "transition-delay", delay + "ms");
-		el.css(sfx + "transition-timing-function", ease);
-		el.css(sfx + "backface-visibility", "hidden");
 
-		setTimeout(function () {
+		setTimeout(function(){
 			el.css(opt);
-		}, 0);
+			el.css(sfx + "transition-property", properties);
+			el.css(sfx + "transition-duration", duration + "ms");
+			el.css(sfx + "transition-delay", delay + "ms");
+			el.css(sfx + "transition-timing-function", ease);
+			el.css(sfx + "backface-visibility", "hidden");
+			el.on(transitionEnd+"."+el.get(0).id, endTransition);
+		},1);
+
 
 		var endTransition = function (e) {
-			el.off(transitionEnd);
+			el.off(transitionEnd+"."+el.get(0).id);
+			clearTimeout(el.get(0).timeout);
+			// e.stopPropagation();
 			el.css(sfx + "transition", "");
-			e.stopPropagation();
 			if (typeof callback == "function") {
 				el.called = true;
 				callback();
 			}
-			return false;
+			return;
 		};
 
+		el.on(transitionEnd+"."+this.id, endTransition);
+
+
+		//el.get(0).addEventListener(transitionEnd, endTransition, false);
+
 		//if there's no transition than call the callback anyway
-		setTimeout(function () {
+		this.timeout = setTimeout(function () {
+			if(jQuery.browser.mozilla)
+				return;
+			el.css(sfx + "transition", "");
 			if (el.called || !callback) {
 				el.called = false;
 				return;
 			}
 			callback();
-		}, duration + 20);
+		}, duration+ delay + 20);
 
-		el.on(transitionEnd, endTransition);
+
+
 	})
 };
 
