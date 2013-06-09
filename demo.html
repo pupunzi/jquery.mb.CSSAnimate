@@ -16,192 +16,218 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/02/13 22.18
+  ~  last modified: 09/06/13 16.35
   ~  ******************************************************************************/
   -->
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>mb.CSSAnimate</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>mb.CSSAnimate</title>
 
-<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
-<style type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+    <style type="text/css">
 
-	body{
-		margin: 0;
-		white-space: inherit;
-		background: #ffcc00;
-		font: 16px/19px 'Ubuntu Mono', sans-serif;
-		overflow-x: hidden;
-		overflow-y: scroll;
-	}
-	#wrapper, #links{
-		position: relative;
-		margin: auto;
-		width:900px;
-	}
-	h1{
-		margin-top: 80px;
-		padding:50px 0;
-	}
-	a{
-		color: white;
-		text-decoration: none;
-	}
-	a:hover{
-		color: #000000;
-		text-decoration: none;
-	}
+        body{
+            margin: 0;
+            white-space: inherit;
+            background: #ffcc00;
+            font: 16px/19px 'Ubuntu Mono', sans-serif;
+            overflow-x: hidden;
+            overflow-y: scroll;
 
-	.elements{
-		top:0;
-		left:0;
-		position:fixed;
-		width:100%;
-		height:100%;
-		box-sizing: border-box;
-	}
+            -webkit-backface-visibility:hidden; /* Chrome and Safari */
+            -moz-backface-visibility:hidden; /* Firefox */
+            -ms-backface-visibility:hidden; /* Internet Explorer */
+            backface-visibility:hidden;
+
+            -webkit-transform:translate3d(0,0,0);
+            -moz-transform:translate3d(0,0,0);
+            -o-transform:translate3d(0,0,0);
+            -ms-transform:translate3d(0,0,0);
+            transform:translate3d(0,0,0);
+
+        }
+
+        #wrapper, #links{
+            position: relative;
+            margin: auto;
+            width:900px;
+        }
+        h1{
+            margin-top: 80px;
+            padding:50px 0;
+        }
+        a{
+            color: white;
+            text-decoration: none;
+        }
+        a:hover{
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .elements{
+            top:0;
+            left:0;
+            position:fixed;
+            width:100%;
+            height:100%;
+            box-sizing: border-box;
+        }
 
 
-	.test{
-		top:0;
-		left:0;
-		position:absolute;
-		width:10px;
-		height:10px;
-		background:#fff;
-		box-shadow: 0 0 5px rgba(0,0,0,0.5);
-		border-radius:10px;
-		box-sizing: border-box;
-	}
+        .test{
+            top:0;
+            left:0;
+            position:absolute;
+            width:10px;
+            height:10px;
+            background:#fff;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+            border-radius:10px;
+            box-sizing: border-box;
 
-	pre{
-		overflow: auto;
-		width: 100%;
-		font: 12px/14px 'Ubuntu Mono', sans-serif;
-		background: rgba(255,255,255,.5);
-		margin: 0;
-		padding: 0;
-	}
+            -webkit-backface-visibility:hidden; /* Chrome and Safari */
+            -moz-backface-visibility:hidden; /* Firefox */
+            -ms-backface-visibility:hidden; /* Internet Explorer */
+            backface-visibility:hidden;
 
-</style>
+            -webkit-transform:translate3d(0,0,0);
+            -moz-transform:translate3d(0,0,0);
+            -o-transform:translate3d(0,0,0);
+            -ms-transform:translate3d(0,0,0);
+            transform:translate3d(0,0,0);
+        }
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
-<script type="text/javascript">
+        pre{
+            overflow: auto;
+            width: 100%;
+            font: 12px/14px 'Ubuntu Mono', sans-serif;
+            background: rgba(255,255,255,.5);
+            margin: 0;
+            padding: 0;
+        }
 
-	$.fn.test = function() {
+    </style>
 
-		var cH = $(window).height();
-		var cW = $(window).width();
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
+    <script type="text/javascript">
 
-		return this.each(function() {
-      var el = $(this);
+        $.fn.test = function() {
 
-      var w = 10 + (50 * Math.floor((Math.random() * 15)));
-      var h = 10 + (50 * Math.floor((Math.random() * 15)));
-      var t = 10 + (Math.floor(Math.random() * (cH-h)));
-      var l = 10 + (Math.floor(Math.random() * (cW-w)));
-      var r = Math.floor(Math.random() * 360);
-      var duration = 2000 + Math.floor((Math.random() * 5000));
+            var cH = $(window).height();
+            var cW = $(window).width();
 
-      //here is the CSSAnimate :-)
-      el.CSSAnimate({
-      top: t,
-      left: l,
-      width: w,
-      height: h,
-      "border-radius":Math.floor(Math.random() * 100),
-      "transform":"rotate("+r+"deg)",
-      "transform-origin":"50% 50%",
-      "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
-      }, duration,0, "ease-out",function() {
-      el.test();
-      })
-		})
-	};
+            return this.each(function() {
+                var el = $(this);
 
-	$.fn.printHTML=function(){
-		return this.each(function(){
-      var $el = $(this);
-      var content=$el.html();
-      content=content.replace(/</g,"&lt;");
-      content=content.replace(/>/g,"&gt;");
-      $el.html(content);
-		})
-	};
+                var w = 10 + (50 * Math.floor((Math.random() * 15)));
+                var h = 10 + (50 * Math.floor((Math.random() * 15)));
+                var t = 10 + (Math.floor(Math.random() * (cH-h)));
+                var l = 10 + (Math.floor(Math.random() * (cW-w)));
+                var r = Math.floor(Math.random() * 360);
+                var duration = 2000 + Math.floor((Math.random() * 5000));
 
-	$(function(){
-		if (self.location.href == top.location.href){
-      var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:10px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-      $("body").append(logo);
-      $("#logo").fadeIn();
-		}
+                //here is the CSSAnimate :-)
+                el.CSSAnimate({
+                    top: t,
+                    left: l,
+                    width: w,
+                    height: h,
+                    "border-radius":Math.floor(Math.random() * 100),
+                    "transform":"rotate("+r+"deg)",
+                    "transform-origin":Math.floor(Math.random() * 50)+"% "+Math.floor(Math.random() * 50)+"%",
+                    "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
+                }, duration,100, "linear",function() {
+                    el.test();
+                })
+            })
+        };
 
-		$(".elements .test").test();
-		$("[data-code=true]").printHTML();
-	});
+        $.fn.printHTML=function(){
+            return this.each(function(){
+                var $el = $(this);
+                var content=$el.html();
+                content=content.replace(/</g,"&lt;");
+                content=content.replace(/>/g,"&gt;");
+                $el.html(content);
+            })
+        };
 
-</script>
+        $(function(){
+            if (self.location.href == top.location.href){
+                var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:10px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+                $("body").append(logo);
+                $("#logo").fadeIn();
+            }
+
+            $(".elements .test").test();
+            $("[data-code=true]").printHTML();
+        });
+
+    </script>
 
 </head>
 <body>
 <a href="https://github.com/pupunzi"><img style="width:100px; position: absolute; top: 20px; right: 20px; border: 0;" src="http://upload.wikimedia.org/wikipedia/commons/b/b3/GitHub.svg" alt="Fork me on GitHub"></a>
 
 <div class="elements">
-	<div class="test one"></div>
-	<div class="test two"></div>
-	<div class="test three"></div>
+    <div class="test one"></div>
+    <div class="test two"></div>
+    <div class="test three"></div>
 
-	<div class="test one"></div>
-	<div class="test two"></div>
-	<div class="test three"></div>
+    <!--
+        <div class="test one"></div>
+        <div class="test two"></div>
+        <div class="test three"></div>
 
-	<div class="test one"></div>
-	<div class="test two"></div>
-	<div class="test three"></div>
+        <div class="test one"></div>
+        <div class="test two"></div>
+        <div class="test three"></div>
+    -->
 </div>
 
 <div id="wrapper">
-	<h1>jquery.mb.CSSAnimate demo</h1>
-	<div id="links">
-		<p>
-      Animate using CSS3 transition instead of the default jQuery.animate method.<br>
-      It provides a fallback to the default animate method if CSS3 is not supported by the browser.
-      <br>
-      <a href="inc/jquery.mb.CSSAnimate.js" target="_blank"> Get the code</a>
-		</p>
-		<p>here is the call for this example:
+    <h1>jquery.mb.CSSAnimate demo</h1>
+    <div id="links">
+        <p>
+            Animate using CSS3 transition instead of the default jQuery.animate method.<br>
+            It provides a fallback to the default animate method if CSS3 is not supported by the browser.
+            <br>
+            <a href="inc/jquery.mb.CSSAnimate.js" target="_blank"> Get the code</a>
+        </p>
+        <p>here is the call for this example:
 		<pre>
 		<code>
 
-       <b>the "DIV" code:</b>
-      <div data-code=true>
-      <div class="test">
-				<div class="test one"></div>
-				<div class="test two"></div>
-				<div class="test three"></div>
+            <b>the "DIV" code:</b>
+            <div data-code=true>
+                <div class="test">
+                    <div class="test one"></div>
+                    <div class="test two"></div>
+                    <div class="test three"></div>
 
-				<div class="test one"></div>
-				<div class="test two"></div>
-				<div class="test three"></div>
+                    <div class="test one"></div>
+                    <div class="test two"></div>
+                    <div class="test three"></div>
 
-				<div class="test one"></div>
-				<div class="test two"></div>
-				<div class="test three"></div>
+                    <div class="test one"></div>
+                    <div class="test two"></div>
+                    <div class="test three"></div>
 
-				<div class="test one"></div>
-				<div class="test two"></div>
-				<div class="test three"></div>
-      </div>
-      </div>
-      <b>the function:</b>
-      
-      $.fn.test = function() {
-        var cH = $(window).height();
-        var cW = $(window).width();
-        return this.each(function() {
+                    <div class="test one"></div>
+                    <div class="test two"></div>
+                    <div class="test three"></div>
+                </div>
+            </div>
+            <b>the function:</b>
+
+            $.fn.test = function() {
+            var cH = $(window).height();
+            var cW = $(window).width();
+            return this.each(function() {
             var el = $(this);
             var w = 30 * (Math.random() * 15);
             var h = 30 * (Math.random() * 15);
@@ -223,16 +249,16 @@
             }, duration, "ease-out", function() {
             el.test();
             })
-        })
-      };
+            })
+            };
 
-      $(".test").test();
+            $(".test").test();
 
-		</code>
+        </code>
 		</pre>
-		</p>
-		<p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>
-	</div>
+        </p>
+        <p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>
+    </div>
 
 </div>
 

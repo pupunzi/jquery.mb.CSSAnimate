@@ -14,12 +14,12 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/02/13 22.35
+ *  last modified: 09/06/13 17.08
  *  *****************************************************************************
  */
 
 /*
- * version: 1.6
+ * version: 1.6.1
  *  params:
 
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
@@ -128,78 +128,48 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 			prop.push(key);
 
-//			if (!el.css(key))
-//				el.css(key, 0);
 		}
 		var properties = prop.join(",");
-
-
-		setTimeout(function(){
-			el.css(opt);
-			el.css(sfx + "transition-property", properties);
-			el.css(sfx + "transition-duration", duration + "ms");
-			el.css(sfx + "transition-delay", delay + "ms");
-			el.css(sfx + "transition-timing-function", ease);
-			el.css(sfx + "backface-visibility", "hidden");
-			el.on(transitionEnd+"."+el.get(0).id, endTransition);
-		},1);
-
 
 		var endTransition = function (e) {
 			el.off(transitionEnd+"."+el.get(0).id);
 			clearTimeout(el.get(0).timeout);
-			// e.stopPropagation();
 			el.css(sfx + "transition", "");
 			if (typeof callback == "function") {
 				el.called = true;
 				callback();
 			}
-			return;
 		};
 
-		el.on(transitionEnd+"."+this.id, endTransition);
+		var css ={};
+		$.extend(css,opt);
+		css[sfx + "transition-property"] = properties;
+		css[sfx + "transition-duration"] = duration + "ms";
+		css[sfx + "transition-delay"] = delay + "ms";
+		css[sfx + "transition-timing-function"] = ease;
+		css[sfx + "backface-visibility"] = "hidden";
 
-
-		//el.get(0).addEventListener(transitionEnd, endTransition, false);
+		setTimeout(function(){
+			el.css(css);
+			el.one(transitionEnd+"."+el.get(0).id, endTransition);
+		},1);
 
 		//if there's no transition than call the callback anyway
-		this.timeout = setTimeout(function () {
-			if(jQuery.browser.mozilla)
-				return;
-			el.css(sfx + "transition", "");
+		el.get(0).timeout = setTimeout(function () {
 			if (el.called || !callback) {
 				el.called = false;
 				return;
 			}
+
+			el.css(sfx + "transition", "");
 			callback();
-		}, duration+ delay + 20);
+
+		}, duration+ delay + 100);
 
 
 
 	})
 };
-
-jQuery.fn.CSSAnimateStop = function () {
-	var sfx = "";
-	var transitionEnd = "transitionEnd";
-	if (jQuery.browser.webkit) {
-		sfx = "-webkit-";
-		transitionEnd = "webkitTransitionEnd";
-	} else if (jQuery.browser.mozilla) {
-		sfx = "-moz-";
-		transitionEnd = "transitionend";
-	} else if (jQuery.browser.opera) {
-		sfx = "-o-";
-		transitionEnd = "otransitionend";
-	} else if (jQuery.browser.msie) {
-		sfx = "-ms-";
-		transitionEnd = "msTransitionEnd";
-	}
-
-	jQuery(this).css(sfx + "transition", "");
-	jQuery(this).off(transitionEnd);
-};
-
 // jQuery.support.transition
 // to verify that CSS3 transition is supported (or any of its browser-specific implementations)
 jQuery.support.transition = (function () {
