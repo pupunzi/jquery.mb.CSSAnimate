@@ -14,12 +14,12 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 09/06/13 17.08
+ *  last modified: 24/06/13 23.59
  *  *****************************************************************************
  */
 
 /*
- * version: 1.6.1
+ * version: 1.6.2
  *  params:
 
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
@@ -137,7 +137,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			el.css(sfx + "transition", "");
 			if (typeof callback == "function") {
 				el.called = true;
-				callback();
+				callback(el);
 			}
 		};
 
@@ -162,11 +162,9 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 
 			el.css(sfx + "transition", "");
-			callback();
+			callback(el);
 
 		}, duration+ delay + 100);
-
-
 
 	})
 };
