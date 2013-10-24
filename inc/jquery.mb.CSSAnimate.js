@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/06/13 23.59
+ *  last modified: 02/10/13 22.42
  *  *****************************************************************************
  */
 
@@ -82,6 +82,9 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				if (o === "transform") {
 					delete opt[o];
 				}
+				if (o === "filter") {
+					delete opt[o];
+				}
 				if (o === "transform-origin") {
 					delete opt[o];
 				}
@@ -118,6 +121,11 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			var key = o;
 			if (key === "transform") {
 				key = sfx + "transform";
+				opt[key] = opt[o];
+				delete opt[o];
+			}
+			if (key === "filter") {
+				key = sfx + "filter";
 				opt[key] = opt[o];
 				delete opt[o];
 			}
