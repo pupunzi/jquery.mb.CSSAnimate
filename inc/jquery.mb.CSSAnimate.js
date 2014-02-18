@@ -18,20 +18,25 @@
  *  *****************************************************************************
  */
 
-/*
+/**
  * version: 1.6.2
  *  params:
-
- @opt        -> the CSS object (ex: {top:300, left:400, ...})
- @duration   -> an int for the animation duration in milliseconds
- @delay      -> an int for the animation delay in milliseconds
- @ease       -> ease  ||  linear || ease-in || ease-out || ease-in-out  ||  cubic-bezier(<number>, <number>,  <number>,  <number>)
- @callback   -> a callback function called once the transition end
-
- example:
-
- jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, transform: 'rotate(50deg) scale(.8)'}, 2000, 100, "ease-out", callback;})
- */
+ *
+ * @opt        -> the CSS object (ex: {top:300, left:400, ...})
+ * @duration   -> an int for the animation duration in milliseconds
+ * @delay      -> an int for the animation delay in milliseconds
+ * @ease       -> 'default’ || ‘in’ || ‘out' || 'in-out' || 'snap' || 'easeOutCubic' || 'easeInOutCubic' || 'easeInCirc' || 'easeOutCirc' || 'easeInOutCirc' || 'easeInExpo' || 'easeOutExpo' || 'easeInOutExpo' || 'easeInQuad' || 'easeOutQuad' || 'easeInOutQuad' || 'easeInQuart' || 'easeOutQuart' || 'easeInOutQuart' || 'easeInQuint' || 'easeOutQuint' || 'easeInOutQuint' || 'easeInSine' || 'easeOutSine' || 'easeInOutSine' || 'easeInBack' || 'easeOutBack' || 'easeInOutBack'
+ *                || cubic-bezier(<number>, <number>,  <number>,  <number>)
+ * @callback   -> a callback function called once the transition end
+ *
+ * Examples:
+ *
+ * 1. jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, rotate: 50, scale: 1.5}, 2000, 100, "ease-out", callback)
+ * 2. jQuery(this).animate({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5}, 2000, 100, "easeOutCubic", callback)
+ * 3. jQuery(this).animate({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5}).animate({x:t+30, y:l-46, width:w/2, height:h*2, rotate: -10, scale: 1})
+ * 4. jQuery(this).css({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5})
+ *
+ **/
 
 
 /*Browser detection patch*/
@@ -211,14 +216,12 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" translateX("+setUnit(opt[o],"px")+")");
 				delete opt[o];
 			}
-
 			if (key === "y") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" translateY("+setUnit(opt[o],"px")+")");
 				delete opt[o];
 			}
-
 			if (key === "z") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -235,21 +238,18 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" rotate("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
-
 			if (key === "rotateX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" rotateX("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
-
 			if (key === "rotateY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" rotateY("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
-
 			if (key === "rotateZ") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -266,14 +266,12 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" scale("+setUnit(opt[o],"")+")");
 				delete opt[o];
 			}
-
 			if (key === "scaleX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" scaleX("+setUnit(opt[o],"")+")");
 				delete opt[o];
 			}
-
 			if (key === "scaleY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -298,20 +296,20 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" skew("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
-
 			if (key === "skewX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" skewX("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
-
 			if (key === "skewY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" skewY("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
+
 
 			if(prop.indexOf(key)<0)
 				prop.push(key);
@@ -339,7 +337,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 
 			el.CSSAIsRunning = false;
-			if(typeof el.CSSqueue[0] == "function"){
+			if(el.CSSqueue && typeof el.CSSqueue[0] == "function"){
 				el.CSSqueue[0]();
 			}
 		};
@@ -356,6 +354,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		setTimeout(function(){
 			$el.one(transitionEnd+"."+el.id, endTransition);
+			console.debug(css)
+
 			$el.origCss(css);
 		},1);
 
@@ -370,7 +370,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			callback($el);
 
 			el.CSSAIsRunning = false;
-			if(typeof el.CSSqueue[0] == "function"){
+			if(el.CSSqueue && typeof el.CSSqueue[0] == "function"){
 				el.CSSqueue[0]();
 			}
 
