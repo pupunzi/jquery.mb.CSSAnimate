@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 18/02/14 1.32
+  ~  last modified: 18/02/14 23.19
   ~  ******************************************************************************/
   -->
 
@@ -35,16 +35,6 @@
             overflow-x: hidden;
             overflow-y: scroll;
 
-            -webkit-backface-visibility:hidden; /* Chrome and Safari */
-            -moz-backface-visibility:hidden; /* Firefox */
-            -ms-backface-visibility:hidden; /* Internet Explorer */
-            backface-visibility:hidden;
-
-            -webkit-transform:translate3d(0,0,0);
-            -moz-transform:translate3d(0,0,0);
-            -o-transform:translate3d(0,0,0);
-            -ms-transform:translate3d(0,0,0);
-            transform:translate3d(0,0,0);
 
         }
 
@@ -97,9 +87,6 @@
             line-height: 1.5;
         }
 
-        .test:hover .box{
-            background: rgba(125, 14, 18, 0.7);
-        }
 
         .test .box,   .test .ghost{
             position: absolute;
@@ -110,16 +97,27 @@
             height: 60px;
             line-height: 60px;
             text-align: center;
-            background: rgba(0,0,0,0.7);
-            border-radius: 2px;
             z-index: 2;
             color: #ddd;
             border-radius: 5px;
             box-shadow: 0 0 1px rgba(0,0,0,0.5);
         }
 
+        .test .box{
+            border: 1px solid transparent;
+            background: rgba(0,0,0,0.7) url("inc/bg.png");
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .test:hover .box{
+            background: rgba(125, 14, 18, 0.7) url("inc/bg.png");
+            background-size: cover;
+            background-position: center center;
+        }
+
         .test .ghost{
-            background: #ffffff;
+            border: 1px solid #ffffff;
         }
     </style>
 
@@ -156,7 +154,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ x: 50, y: 30 });</pre>
+            <pre class="code">.animate({ x: 50, y: 30 });</pre>
         </div>
         <div class="test" id="test-0-1"  onmouseenter="$('.box',this).css({x:-50, y:-30})" onmouseleave="$('.box',this).css({x:0, y:0})">
             <h3>Translate (css)</h3>
@@ -164,7 +162,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">css({ x: 50, y: 30 });</pre>
+            <pre class="code">.css({ x: 50, y: 30 });</pre>
         </div>
         <br>
 
@@ -174,7 +172,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ rotate: 45 });</pre>
+            <pre class="code">.animate({ rotate: 45 });</pre>
         </div>
         <div class="test" id="test-1-1" onmouseenter="$('.box',this).css({rotateZ:45 })" onmouseleave="$('.box',this).css({rotateZ:0})">
             <h3>Rotate (css)</h3>
@@ -182,7 +180,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">css({ rotate: 45 });</pre>
+            <pre class="code">.css({ rotate: 45 });</pre>
         </div>
         <br>
 
@@ -192,7 +190,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ scale: 2 });</pre>
+            <pre class="code">.animate({ scale: 2 });</pre>
         </div>
         <div class="test" id="test-2-1" onmouseenter="$('.box',this).css({scale:2},300)" onmouseleave="$('.box',this).css({scale:1},600,0,'easeInBack')">
             <h3>Scale (css)</h3>
@@ -200,7 +198,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">css({ scale: 2 });</pre>
+            <pre class="code">.css({ scale: 2 });</pre>
         </div>
         <br>
 
@@ -210,7 +208,7 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ skew: -50 });</pre>
+            <pre class="code">.animate({ skew: -50 });</pre>
         </div>
         <div class="test" id="test-3-1" onmouseenter="$('.box',this).css({skew:-50})" onmouseleave="$('.box',this).css({skew:0},'default',0,'easeInBack')">
             <h3>skew (css)</h3>
@@ -218,25 +216,27 @@
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">css({ skew: -50 });</pre>
+            <pre class="code">.css({ skew: -50 });</pre>
         </div>
 
 
         <div class="test" id="test-4" onmouseenter="$('.box',this).animate({skew:-50}).animate({rotate:-120})" onmouseleave="$('.box',this).animate({skew:0})">
-            <h3>skew - rotate</h3>
+            <h3>skew - rotate (queue)</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ skew: -50 }).animate({rotate:-120});</pre>
+            <pre class="code">.animate({ skew: -50 })<br>.animate({rotate:-120});</pre>
         </div>
-        <div class="test" id="test-5" onmouseenter="$('.box',this).animate({marginLeft:-50})" onmouseleave="$('.box',this).animate({marginLeft:+50})">
-            <h3>skew - rotate</h3>
+        <div class="test" id="test-5"
+             onmouseenter="$('.box',this).animate({marginLeft:-50}).animate({marginTop:-50})"
+             onmouseleave="$('.box',this).animate({marginLeft:-30}).animate({marginTop:-30})">
+            <h3>skew - rotate (queue)</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ marginLeft: -50 });</pre>
+            <pre class="code">.animate({ marginLeft: -50 })<br>.animate({marginTop:-50});</pre>
         </div>
 
         <p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>

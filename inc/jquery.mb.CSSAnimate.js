@@ -14,29 +14,24 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/02/14 1.31
+ *  last modified: 19/02/14 0.21
  *  *****************************************************************************
  */
 
-/**
+/*
  * version: 1.6.2
  *  params:
- *
- * @opt        -> the CSS object (ex: {top:300, left:400, ...})
- * @duration   -> an int for the animation duration in milliseconds
- * @delay      -> an int for the animation delay in milliseconds
- * @ease       -> 'default’ || ‘in’ || ‘out' || 'in-out' || 'snap' || 'easeOutCubic' || 'easeInOutCubic' || 'easeInCirc' || 'easeOutCirc' || 'easeInOutCirc' || 'easeInExpo' || 'easeOutExpo' || 'easeInOutExpo' || 'easeInQuad' || 'easeOutQuad' || 'easeInOutQuad' || 'easeInQuart' || 'easeOutQuart' || 'easeInOutQuart' || 'easeInQuint' || 'easeOutQuint' || 'easeInOutQuint' || 'easeInSine' || 'easeOutSine' || 'easeInOutSine' || 'easeInBack' || 'easeOutBack' || 'easeInOutBack'
- *                || cubic-bezier(<number>, <number>,  <number>,  <number>)
- * @callback   -> a callback function called once the transition end
- *
- * Examples:
- *
- * 1. jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, rotate: 50, scale: 1.5}, 2000, 100, "ease-out", callback)
- * 2. jQuery(this).animate({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5}, 2000, 100, "easeOutCubic", callback)
- * 3. jQuery(this).animate({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5}).animate({x:t+30, y:l-46, width:w/2, height:h*2, rotate: -10, scale: 1})
- * 4. jQuery(this).css({x:t, y:l, width:w, height:h, rotate: 50, scale: 1.5})
- *
- **/
+
+ @opt        -> the CSS object (ex: {top:300, left:400, ...})
+ @duration   -> an int for the animation duration in milliseconds
+ @delay      -> an int for the animation delay in milliseconds
+ @ease       -> ease  ||  linear || ease-in || ease-out || ease-in-out  ||  cubic-bezier(<number>, <number>,  <number>,  <number>)
+ @callback   -> a callback function called once the transition end
+
+ example:
+
+ jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, transform: 'rotate(50deg) scale(.8)'}, 2000, 100, "ease-out", callback;})
+ */
 
 
 /*Browser detection patch*/
@@ -53,6 +48,20 @@ if (!jQuery.browser) {
 	-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), -1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10), isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10)), jQuery.browser.version = jQuery.browser.majorVersion
 }
 
+
+function uncamel(str) {
+	return str.replace(/([A-Z])/g, function(letter) { return '-' + letter.toLowerCase(); });
+}
+
+function setUnit(i, units) {
+	if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
+		return i;
+	} else {
+		return "" + i + units;
+	}
+}
+
+
 jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 	return this.each(function () {
 
@@ -63,17 +72,15 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		var event = event || {type:"noEvent"};
 
 		if(el.CSSAIsRunning && el.eventType == event.type){
-			el.CSSqueue = el.CSSqueue || [];
-			el.CSSqueue.push (
-					function(){
-						$el.CSSAnimate(opt, duration, delay, ease, callback);
-						el.CSSqueue.splice(0,1);
-					})
+			el.CSSqueue = function(){
+				$el.CSSAnimate(opt, duration, delay, ease, callback);
+			}
 			return;
 		}
 
+		el.CSSqueue=null;
 		el.eventType = event.type;
-		//el.CSSqueue =[];
+
 
 		if ($el.length === 0 || !opt) {
 			return;
@@ -216,12 +223,14 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" translateX("+setUnit(opt[o],"px")+")");
 				delete opt[o];
 			}
+
 			if (key === "y") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" translateY("+setUnit(opt[o],"px")+")");
 				delete opt[o];
 			}
+
 			if (key === "z") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -238,18 +247,21 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" rotate("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
 			if (key === "rotateX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" rotateX("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
 			if (key === "rotateY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" rotateY("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
 			if (key === "rotateZ") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -266,12 +278,14 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" scale("+setUnit(opt[o],"")+")");
 				delete opt[o];
 			}
+
 			if (key === "scaleX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" scaleX("+setUnit(opt[o],"")+")");
 				delete opt[o];
 			}
+
 			if (key === "scaleY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -296,12 +310,14 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				opt[key]+= (" skew("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
 			if (key === "skewX") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
 				opt[key]+= (" skewX("+setUnit(opt[o],"deg")+")");
 				delete opt[o];
 			}
+
 			if (key === "skewY") {
 				key = sfx + "transform";
 				opt[key] = opt[key] || "";
@@ -309,19 +325,18 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				delete opt[o];
 			}
 
-
+			/**
+			 * Perspective
+			 * */
+			if (key === "perspective") {
+				key = sfx + "transform";
+				opt[key] = opt[key] || "";
+				opt[key]+= (" perspective("+setUnit(opt[o],"px")+")");
+				delete opt[o];
+			}
 
 			if(prop.indexOf(key)<0)
-				prop.push(key);
-
-		}
-
-		function setUnit(i, units) {
-			if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
-				return i;
-			} else {
-				return "" + i + units;
-			}
+				prop.push(uncamel(key));
 		}
 
 		var properties = prop.join(",");
@@ -332,13 +347,14 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			clearTimeout(el.timeout);
 			$el.origCss(sfx + "transition", "");
 			if (typeof callback == "function") {
-				el.called = true;
 				callback($el);
 			}
+			el.called = true;
 
 			el.CSSAIsRunning = false;
-			if(el.CSSqueue && typeof el.CSSqueue[0] == "function"){
-				el.CSSqueue[0]();
+			if(typeof el.CSSqueue == "function"){
+				el.CSSqueue();
+				el.CSSqueue=null;
 			}
 		};
 
@@ -354,9 +370,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		setTimeout(function(){
 			$el.one(transitionEnd+"."+el.id, endTransition);
-			console.debug(css)
-
 			$el.origCss(css);
+
 		},1);
 
 		//if there's no transition than call the callback anyway
@@ -370,8 +385,9 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			callback($el);
 
 			el.CSSAIsRunning = false;
-			if(el.CSSqueue && typeof el.CSSqueue[0] == "function"){
-				el.CSSqueue[0]();
+			if(typeof el.CSSqueue == "function"){
+				el.CSSqueue();
+				el.CSSqueue=null;
 			}
 
 
