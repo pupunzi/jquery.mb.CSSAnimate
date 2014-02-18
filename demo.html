@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 07/01/14 22.50
+  ~  last modified: 17/02/14 19.49
   ~  ******************************************************************************/
   -->
 
@@ -128,19 +128,19 @@
                 var t = 10 + (Math.floor(Math.random() * (cH-h)));
                 var l = 10 + (Math.floor(Math.random() * (cW-w)));
                 var r = Math.floor(Math.random() * 360);
-                var duration = 2000 + Math.floor((Math.random() * 5000));
+                var duration = 1000 + Math.floor((Math.random() * 1000));
 
                 //here is the CSSAnimate :-)
                 el.CSSAnimate({
-                    top: t,
-                    left: l,
+                    y: t,
+                    x: l,
                     width: w,
                     height: h,
                     "border-radius":Math.floor(Math.random() * 100),
-                    "transform":"rotate("+r+"deg)",
+                    "rotate":r,
                     "transform-origin":Math.floor(Math.random() * 50)+"% "+Math.floor(Math.random() * 50)+"%",
                     "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
-                }, duration,100, "linear",function() {
+                }, duration,10, "linear",function() {
                     el.test();
                 })
             })
@@ -178,7 +178,6 @@
     <div class="test two"></div>
     <div class="test three"></div>
 
-    <!--
         <div class="test one"></div>
         <div class="test two"></div>
         <div class="test three"></div>
@@ -186,7 +185,6 @@
         <div class="test one"></div>
         <div class="test two"></div>
         <div class="test three"></div>
-    -->
 </div>
 
 <div id="wrapper">
