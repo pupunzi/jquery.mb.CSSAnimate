@@ -230,13 +230,13 @@
             </div>
             <pre class="code">animate({ skew: -50 }).animate({rotate:-120});</pre>
         </div>
-        <div class="test" id="test-5" onmouseenter="$('.box',this).animate({marginLeft:'-50'})" onmouseleave="$('.box',this).animate({marginLeft:'+50'})">
+        <div class="test" id="test-5" onmouseenter="$('.box',this).animate({marginLeft:-50})" onmouseleave="$('.box',this).animate({marginLeft:+50})">
             <h3>skew - rotate</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">animate({ left: -50 });</pre>
+            <pre class="code">animate({ marginLeft: -50 });</pre>
         </div>
 
         <p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>
