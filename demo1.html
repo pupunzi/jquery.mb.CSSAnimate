@@ -25,7 +25,7 @@
     <title>mb.CSSAnimate</title>
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
-    <style type="text/css">
+    <style>
 
         body{
             margin: 0;
@@ -66,7 +66,61 @@
             text-decoration: none;
         }
 
+        .test{
+            width: 250px;
+            padding: 20px;
+            display: inline-block;
+            margin: 0 20px 20px 0;
+            border-radius: 5px;
+            border:1px solid rgba(255,255,255,0);
+        }
+        .test:hover{
+            border:1px solid rgba(255,255,255,.4);
+        }
 
+        .test .area{
+            width: auto;
+            height: 100px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+
+        .test pre{
+            font-family: menlo, monospace;
+            font-size: 7pt;
+            padding: 10px;
+            background: #eee;
+            margin: 20px -20px -20px -20px;
+            border-top: solid 1px #ddd;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .test:hover .box{
+            background: rgba(125, 14, 18, 0.7);
+        }
+
+        .test .box,   .test .ghost{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -30px 0 0 -30px;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            border-radius: 2px;
+            z-index: 2;
+            color: #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 1px rgba(0,0,0,0.5);
+        }
+
+        .test .ghost{
+            background: #ffffff;
+        }
     </style>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -85,59 +139,6 @@
 </head>
 <body>
 <a href="https://github.com/pupunzi"><img style="width:100px; position: absolute; top: 20px; right: 20px; border: 0;" src="http://upload.wikimedia.org/wikipedia/commons/b/b3/GitHub.svg" alt="Fork me on GitHub"></a>
-<style>
-    .test{
-        width: 250px;
-        padding: 20px;
-        display: inline-block;
-        margin: 0 20px 20px 0;
-        border-radius: 5px;
-        border:1px solid rgba(255,255,255,0);
-    }
-    .test:hover{
-        border:1px solid rgba(255,255,255,.4);
-    }
-
-    .test .area{
-        width: auto;
-        height: 100px;
-        margin: 10px 0;
-        position: relative;
-    }
-
-
-    .test pre{
-        font-family: menlo, monospace;
-        font-size: 7pt;
-        padding: 10px;
-        background: #eee;
-        margin: 20px -20px -20px -20px;
-        border-top: solid 1px #ddd;
-        white-space: pre-wrap;
-        line-height: 1.5;
-    }
-
-    .test .box,   .test .ghost{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin: -30px 0 0 -30px;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        background: rgba(0,0,0,0.7);
-        border-radius: 2px;
-        z-index: 2;
-        color: #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 1px rgba(0,0,0,0.5);
-    }
-
-    .test .ghost{
-        background: #ffffff;
-    }
-</style>
 
 <div id="wrapper">
     <h1>jquery.mb.CSSAnimate demo</h1>
@@ -221,7 +222,7 @@
         </div>
 
 
-        <div class="test" id="test-4" onmouseenter="$('.box',this).animate({skew:-50}).animate({rotate:-120})" onmouseleave="$('.box',this).animate({skew:0}).animate({rotate:0})">
+        <div class="test" id="test-4" onmouseenter="$('.box',this).animate({skew:-50}).animate({rotate:-120})" onmouseleave="$('.box',this).animate({skew:0})">
             <h3>skew - rotate</h3>
             <div class="area">
                 <div class="ghost"></div>
@@ -229,7 +230,14 @@
             </div>
             <pre class="code">animate({ skew: -50 }).animate({rotate:-120});</pre>
         </div>
-
+        <div class="test" id="test-5" onmouseenter="$('.box',this).animate({marginLeft:'-50'})" onmouseleave="$('.box',this).animate({marginLeft:'+50'})">
+            <h3>skew - rotate</h3>
+            <div class="area">
+                <div class="ghost"></div>
+                <div class="box"></div>
+            </div>
+            <pre class="code">animate({ left: -50 });</pre>
+        </div>
 
         <p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>
     </div>

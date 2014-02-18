@@ -32,6 +32,7 @@
             margin: 0;
             white-space: inherit;
             background: #ffcc00;
+            background: #000;
             font: 16px/19px 'Ubuntu Mono', sans-serif;
             overflow-x: hidden;
             overflow-y: scroll;
@@ -84,7 +85,7 @@
             width:10px;
             height:10px;
             background:#fff;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+            /*box-shadow: inset 0 0 5px rgba(0,0,0,0.5);*/
             border-radius:10px;
             box-sizing: border-box;
 
@@ -123,12 +124,12 @@
             return this.each(function() {
                 var el = $(this);
 
-                var w = 10 + (50 * Math.floor((Math.random() * 15)));
-                var h = 10 + (50 * Math.floor((Math.random() * 15)));
+                var w = 10 + (5 * Math.floor((Math.random() * 15)));
+                var h = 10 + (5 * Math.floor((Math.random() * 15)));
                 var t = 10 + (Math.floor(Math.random() * (cH-h)));
                 var l = 10 + (Math.floor(Math.random() * (cW-w)));
                 var r = Math.floor(Math.random() * 360);
-                var duration = 1000 + Math.floor((Math.random() * 1000));
+                var duration = 1000 + Math.floor((Math.random() * 5000));
 
                 //here is the CSSAnimate :-)
                 el.CSSAnimate({
@@ -136,11 +137,12 @@
                     x: l,
                     width: w,
                     height: h,
-                    "border-radius":Math.floor(Math.random() * 100),
-                    "rotate":r,
-                    "transform-origin":Math.floor(Math.random() * 50)+"% "+Math.floor(Math.random() * 50)+"%",
-                    "background":"rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
-                }, duration,10, "linear",function() {
+                    skew: r/3,
+                    "border-radius": Math.floor(Math.random() * el.width()),
+                    "rotate": r,
+                    "transform-origin": Math.floor(Math.random() * 100)+"% "+Math.floor(Math.random() * 100)+"%",
+                    "background": "rgba("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+(.6+Math.random()*.4)+")"
+                }, duration, 0, "linear", function() {
                     el.test();
                 })
             })

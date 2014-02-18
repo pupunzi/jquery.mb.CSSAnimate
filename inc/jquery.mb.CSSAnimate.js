@@ -58,22 +58,24 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		var event = event || {type:"noEvent"};
 
 		if(el.CSSAIsRunning && el.eventType == event.type){
-			el.CSSqueue = function(){
-				$el.CSSAnimate(opt, duration, delay, ease, callback);
-			}
+			el.CSSqueue = el.CSSqueue || [];
+			el.CSSqueue.push (
+					function(){
+						$el.CSSAnimate(opt, duration, delay, ease, callback);
+						el.CSSqueue.splice(0,1);
+					})
 			return;
 		}
 
-		el.CSSqueue=null;
 		el.eventType = event.type;
-
+		//el.CSSqueue =[];
 
 		if ($el.length === 0 || !opt) {
 			return;
 		}
 
 		el.CSSAIsRunning = true;
-		
+
 
 		if (typeof duration == "function") {
 			callback = duration;
@@ -337,9 +339,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 
 			el.CSSAIsRunning = false;
-			if(typeof el.CSSqueue == "function"){
-				el.CSSqueue();
-				el.CSSqueue=null;
+			if(typeof el.CSSqueue[0] == "function"){
+				el.CSSqueue[0]();
 			}
 		};
 
@@ -369,9 +370,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			callback($el);
 
 			el.CSSAIsRunning = false;
-			if(typeof el.CSSqueue == "function"){
-				el.CSSqueue();
-				el.CSSqueue=null;
+			if(typeof el.CSSqueue[0] == "function"){
+				el.CSSqueue[0]();
 			}
 
 
