@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 19/02/14 0.38
+  ~  last modified: 15/03/14 22.40
   ~  ******************************************************************************/
   -->
 
@@ -106,6 +106,14 @@
     <script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
     <script type="text/javascript">
 
+        function setUnit(i, units) {
+            if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
+                return i;
+            } else {
+                return "" + i + units;
+            }
+        }
+
         var shadow = setUnit((Math.floor(Math.random() * 180)),"px") + " " + setUnit((Math.floor(Math.random() * 180)),"px") + " " + setUnit(10 + (Math.floor(Math.random() * 20)),"px") +" rgba(0,0,0,0.2)";
 
         $.fn.test = function() {
@@ -123,9 +131,8 @@
                 var r = Math.floor(Math.random() * 360);
                 var duration = 1000 + Math.floor((Math.random() * 5000));
 
-
                 //here is the CSSAnimate :-)
-                el.animate({
+                el.CSSAnimate({
                     y: t,
                     x: l,
                     width: w,

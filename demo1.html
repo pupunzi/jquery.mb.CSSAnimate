@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 18/02/14 23.19
+  ~  last modified: 15/03/14 22.47
   ~  ******************************************************************************/
   -->
 
@@ -105,13 +105,13 @@
 
         .test .box{
             border: 1px solid transparent;
-            background: rgba(0,0,0,0.7) url("inc/bg.png");
+            background: rgba(0,0,0,0.7) url("images/bg.png");
             background-position: center center;
             background-size: cover;
         }
 
         .test:hover .box{
-            background: rgba(125, 14, 18, 0.7) url("inc/bg.png");
+            background: rgba(125, 14, 18, 0.7) url("images/bg.png");
             background-size: cover;
             background-position: center center;
         }
@@ -142,21 +142,21 @@
     <h1>jquery.mb.CSSAnimate demo</h1>
     <div id="links">
         <p>
-            Animate using CSS3 transition instead of the default jQuery.animate method.<br>
-            It provides a fallback to the default animate method if CSS3 is not supported by the browser.
+            CSSAnimate using CSS3 transition instead of the default jQuery.CSSAnimate method.<br>
+            It provides a fallback to the default CSSAnimate method if CSS3 is not supported by the browser.
             <br>
             <a href="inc/jquery.mb.CSSAnimate.js" target="_blank"> Get the code</a>
         </p>
 
-        <div class="test" id="test-0" onmouseenter="$('.box',this).animate({x:-50, y:-30})" onmouseleave="$('.box',this).animate({x:0, y:0})">
+        <div class="test" id="test-0" onmouseenter="$('.box',this).CSSAnimate({x:-50, y:-30})" onmouseleave="$('.box',this).CSSAnimate({x:0, y:0})">
             <h3>Translate</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ x: 50, y: 30 });</pre>
+            <pre class="code">.CSSAnimate({ x: 50, y: 30 });</pre>
         </div>
-        <div class="test" id="test-0-1"  onmouseenter="$('.box',this).css({x:-50, y:-30})" onmouseleave="$('.box',this).css({x:0, y:0})">
+        <div class="test" id="test-0-1"  onmouseenter="$('.box',this).css3({x:-50, y:-30})" onmouseleave="$('.box',this).css3({x:0, y:0})">
             <h3>Translate (css)</h3>
             <div class="area">
                 <div class="ghost"></div>
@@ -166,15 +166,15 @@
         </div>
         <br>
 
-        <div class="test" id="test-1"  onmouseenter="$('.box',this).animate({rotateZ:45 })" onmouseleave="$('.box',this).animate({rotateZ:0})">
+        <div class="test" id="test-1"  onmouseenter="$('.box',this).CSSAnimate({rotateZ:45 })" onmouseleave="$('.box',this).CSSAnimate({rotateZ:0})">
             <h3>Rotate</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ rotate: 45 });</pre>
+            <pre class="code">.CSSAnimate({ rotate: 45 });</pre>
         </div>
-        <div class="test" id="test-1-1" onmouseenter="$('.box',this).css({rotateZ:45 })" onmouseleave="$('.box',this).css({rotateZ:0})">
+        <div class="test" id="test-1-1" onmouseenter="$('.box',this).css3({rotateZ:45 })" onmouseleave="$('.box',this).css3({rotateZ:0})">
             <h3>Rotate (css)</h3>
             <div class="area">
                 <div class="ghost"></div>
@@ -184,15 +184,15 @@
         </div>
         <br>
 
-        <div class="test" id="test-2" onmouseenter="$('.box',this).animate({scale:2},'default')" onmouseleave="$('.box',this).animate({scale:1},'default',0,'easeInBack')">
+        <div class="test" id="test-2" onmouseenter="$('.box',this).CSSAnimate({scale:2},'default')" onmouseleave="$('.box',this).CSSAnimate({scale:1},'default',0,'easeInBack')">
             <h3>Scale</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ scale: 2 });</pre>
+            <pre class="code">.CSSAnimate({ scale: 2 });</pre>
         </div>
-        <div class="test" id="test-2-1" onmouseenter="$('.box',this).css({scale:2},300)" onmouseleave="$('.box',this).css({scale:1},600,0,'easeInBack')">
+        <div class="test" id="test-2-1" onmouseenter="$('.box',this).css3({scale:2})" onmouseleave="$('.box',this).css3({scale:1})">
             <h3>Scale (css)</h3>
             <div class="area">
                 <div class="ghost"></div>
@@ -202,15 +202,15 @@
         </div>
         <br>
 
-        <div class="test" id="test-3" onmouseenter="$('.box',this).animate({skew:-50})" onmouseleave="$('.box',this).animate({skew:0})">
+        <div class="test" id="test-3" onmouseenter="$('.box',this).CSSAnimate({skew:-50})" onmouseleave="$('.box',this).CSSAnimate({skew:0})">
             <h3>skew</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ skew: -50 });</pre>
+            <pre class="code">.CSSAnimate({ skew: -50 });</pre>
         </div>
-        <div class="test" id="test-3-1" onmouseenter="$('.box',this).css({skew:-50})" onmouseleave="$('.box',this).css({skew:0},'default',0,'easeInBack')">
+        <div class="test" id="test-3-1" onmouseenter="$('.box',this).css3({skew:-50})" onmouseleave="$('.box',this).css3({skew:0},'default',0,'easeInBack')">
             <h3>skew (css)</h3>
             <div class="area">
                 <div class="ghost"></div>
@@ -220,23 +220,23 @@
         </div>
 
 
-        <div class="test" id="test-4" onmouseenter="$('.box',this).animate({skew:-50}).animate({rotate:-120})" onmouseleave="$('.box',this).animate({skew:0})">
+        <div class="test" id="test-4" onmouseenter="$('.box',this).CSSAnimate({skew:-50}).CSSAnimate({rotate:-120})" onmouseleave="$('.box',this).CSSAnimate({skew:0})">
             <h3>skew - rotate (queue)</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ skew: -50 })<br>.animate({rotate:-120});</pre>
+            <pre class="code">.CSSAnimate({ skew: -50 })<br>.CSSAnimate({rotate:-120});</pre>
         </div>
         <div class="test" id="test-5"
-             onmouseenter="$('.box',this).animate({marginLeft:-50}).animate({marginTop:-50})"
-             onmouseleave="$('.box',this).animate({marginLeft:-30}).animate({marginTop:-30})">
+             onmouseenter="$('.box',this).CSSAnimate({marginLeft:-50}).CSSAnimate({marginTop:-50})"
+             onmouseleave="$('.box',this).CSSAnimate({marginLeft:-30}).CSSAnimate({marginTop:-30})">
             <h3>skew - rotate (queue)</h3>
             <div class="area">
                 <div class="ghost"></div>
                 <div class="box"></div>
             </div>
-            <pre class="code">.animate({ marginLeft: -50 })<br>.animate({marginTop:-50});</pre>
+            <pre class="code">.CSSAnimate({ marginLeft: -50 })<br>.CSSAnimate({marginTop:-50});</pre>
         </div>
 
         <p>back to <a href="http://pupunzi.github.com">pupunzi experiments</a></p>

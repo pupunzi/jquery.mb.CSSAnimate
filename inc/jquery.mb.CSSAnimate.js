@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 19/02/14 0.21
+ *  last modified: 15/03/14 22.47
  *  *****************************************************************************
  */
 
@@ -33,36 +33,65 @@
  jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, transform: 'rotate(50deg) scale(.8)'}, 2000, 100, "ease-out", callback;})
  */
 
-
 /*Browser detection patch*/
+var nAgt = navigator.userAgent;
 if (!jQuery.browser) {
-	jQuery.browser = {}, jQuery.browser.mozilla = !1, jQuery.browser.webkit = !1, jQuery.browser.opera = !1, jQuery.browser.safari = !1, jQuery.browser.chrome = !1, jQuery.browser.msie = !1;
-	var nAgt = navigator.userAgent;
-	jQuery.browser.ua = nAgt, jQuery.browser.name = navigator.appName, jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
+	jQuery.browser = {};
+	jQuery.browser.mozilla = !1;
+	jQuery.browser.webkit = !1;
+	jQuery.browser.opera = !1;
+	jQuery.browser.safari = !1;
+	jQuery.browser.chrome = !1;
+	jQuery.browser.msie = !1;
+	jQuery.browser.ua = nAgt;
+	jQuery.browser.name = navigator.appName;
+	jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
+	jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
 	var nameOffset, verOffset, ix;
 	if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
-		jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer";
+		jQuery.browser.msie = !0;
+		jQuery.browser.name = "Microsoft Internet Explorer";
 		var start = nAgt.indexOf("rv:") + 3, end = start + 4;
 		jQuery.browser.fullVersion = nAgt.substring(start, end)
 	} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.chrome = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.safari = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
-	-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), -1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10), isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10)), jQuery.browser.version = jQuery.browser.majorVersion
+	-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+	-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+	jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
+	isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
+	jQuery.browser.version = jQuery.browser.majorVersion
 }
+jQuery.browser.android = /Android/i.test(nAgt);
+jQuery.browser.blackberry = /BlackBerry/i.test(nAgt);
+jQuery.browser.ios = /iPhone|iPad|iPod/i.test(nAgt);
+jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
+jQuery.browser.windowsMobile = /IEMobile/i.test(nAgt);
+jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile;
 
-
-function uncamel(str) {
-	return str.replace(/([A-Z])/g, function(letter) { return '-' + letter.toLowerCase(); });
-}
-
-function setUnit(i, units) {
-	if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
-		return i;
-	} else {
-		return "" + i + units;
-	}
-}
 
 
 jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
+
+	// jQuery.support.transition
+// to verify that CSS3 transition is supported (or any of its browser-specific implementations)
+	jQuery.support.transition = (function () {
+		var thisBody = document.body || document.documentElement;
+		var thisStyle = thisBody.style;
+		return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
+	})();
+
+
+	function uncamel(str) {
+		return str.replace(/([A-Z])/g, function(letter) { return '-' + letter.toLowerCase(); });
+	}
+
+	function setUnit(i, units) {
+		if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
+			return i;
+		} else {
+			return "" + i + units;
+		}
+	}
+
 	return this.each(function () {
 
 		var el = this;
@@ -87,7 +116,6 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		}
 
 		el.CSSAIsRunning = true;
-
 
 		if (typeof duration == "function") {
 			callback = duration;
@@ -192,21 +220,20 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		}
 
 		var prop = [];
-
 		for (var o in opt) {
-
 			var key = o;
-
 			if (key === "transform") {
 				key = sfx + "transform";
 				opt[key] = opt[o];
 				delete opt[o];
 			}
+
 			if (key === "filter") {
 				key = sfx + "filter";
 				opt[key] = opt[o];
 				delete opt[o];
 			}
+
 			if (key === "transform-origin" || key === "origin") {
 				key = sfx + "transform-origin";
 				opt[key] = opt[o];
@@ -341,11 +368,10 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		var properties = prop.join(",");
 
-
 		var endTransition = function () {
 			$el.off(transitionEnd+"."+el.id);
 			clearTimeout(el.timeout);
-			$el.origCss(sfx + "transition", "");
+			$el.css(sfx + "transition", "");
 			if (typeof callback == "function") {
 				callback($el);
 			}
@@ -370,7 +396,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		setTimeout(function(){
 			$el.one(transitionEnd+"."+el.id, endTransition);
-			$el.origCss(css);
+			$el.css(css);
 
 		},1);
 
@@ -381,7 +407,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				el.CSSAIsRunning = false;
 				return;
 			}
-			$el.origCss(sfx + "transition", "");
+
+			$el.css(sfx + "transition", "");
 			callback($el);
 
 			el.CSSAIsRunning = false;
@@ -389,26 +416,12 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				el.CSSqueue();
 				el.CSSqueue=null;
 			}
-
-
 		}, duration + delay + 100);
-
 	})
 };
 
-// jQuery.support.transition
-// to verify that CSS3 transition is supported (or any of its browser-specific implementations)
-jQuery.support.transition = (function () {
-	var thisBody = document.body || document.documentElement;
-	var thisStyle = thisBody.style;
-	return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
-})();
-
-/* If transitions are supported overwrite both "animate" and "css" methods*/
-if (jQuery.support.transition) {
-	$.fn.origCss = $.fn.css;
-	$.fn.css = function(opt){
-		return this.CSSAnimate(opt,1,0,null,null);
-	};
-	$.fn.animate = $.fn.CSSAnimate;
+$.fn.css3 = function(opt, duration, delay, ease, callback){
+	return this.each(function(){
+		$(this).CSSAnimate(opt,1,0,null);
+	})
 }
