@@ -67,8 +67,6 @@ jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
 jQuery.browser.windowsMobile = /IEMobile/i.test(nAgt);
 jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile;
 
-
-
 jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 	// jQuery.support.transition
@@ -205,16 +203,13 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		var sfx = "";
 		var transitionEnd = "transitionEnd";
-		if (jQuery.browser.webkit) {
+		if (jQuery.browser.webkit || jQuery.browser.opera) {
 			sfx = "-webkit-";
 			transitionEnd = "webkitTransitionEnd";
 		} else if (jQuery.browser.mozilla) {
 			sfx = "-moz-";
 			transitionEnd = "transitionend";
-		} else if (jQuery.browser.opera) {
-			sfx = "-o-";
-			transitionEnd = "otransitionend";
-		} else if (jQuery.browser.msie) {
+		}  else if (jQuery.browser.msie) {
 			sfx = "-ms-";
 			transitionEnd = "msTransitionEnd";
 		}
@@ -424,4 +419,4 @@ $.fn.css3 = function(opt, duration, delay, ease, callback){
 	return this.each(function(){
 		$(this).CSSAnimate(opt,1,0,null);
 	})
-}
+};
