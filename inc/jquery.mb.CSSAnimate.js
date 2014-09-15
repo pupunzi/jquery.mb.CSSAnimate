@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.CSSAnimate.js                                                                                                                    _
- _ last modified: 04/09/14 22.30                                                                                                                    _
+ _ last modified: 15/09/14 21.45                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -364,16 +364,18 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		var properties = prop.join(",");
 
-		var endTransition = function () {
+		function endTransition () {
+
 			$el.off(transitionEnd+"."+el.id);
 			clearTimeout(el.timeout);
 			$el.css(sfx + "transition", "");
 			if (typeof callback == "function") {
 				callback($el);
 			}
-			el.called = true;
 
+			el.called = true;
 			el.CSSAIsRunning = false;
+
 			if(typeof el.CSSqueue == "function"){
 				el.CSSqueue();
 				el.CSSqueue=null;
@@ -390,10 +392,10 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		css[sfx + "transition-timing-function"] = ease;
 		//css[sfx + "backface-visibility"] = "hidden";
 
-		setTimeout(function(){
-			$el.one(transitionEnd+"."+el.id, endTransition);
-			$el.css(css);
-		},10);
+//		setTimeout(function(){
+		$el.one(transitionEnd+"."+el.id, endTransition);
+		$el.css(css);
+//		},0);
 
 		//if there's no transition than call the callback anyway
 		el.timeout = setTimeout(function () {
@@ -413,6 +415,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				el.CSSqueue=null;
 			}
 		}, duration + delay + 300);
+
 	})
 };
 
