@@ -388,14 +388,14 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		css[sfx + "transition-property"] = properties;
 		css[sfx + "transition-duration"] = duration + "ms";
 		css[sfx + "transition-delay"] = delay + "ms";
-		css[sfx + "transition-style"] = "preserve-3d";
 		css[sfx + "transition-timing-function"] = ease;
+		//css[sfx + "transition-style"] = "preserve-3d";
 		//css[sfx + "backface-visibility"] = "hidden";
 
-//		setTimeout(function(){
+		setTimeout(function(){
 		$el.one(transitionEnd+"."+el.id, endTransition);
 		$el.css(css);
-//		},0);
+		},0);
 
 		//if there's no transition than call the callback anyway
 		el.timeout = setTimeout(function () {
