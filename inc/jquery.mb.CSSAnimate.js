@@ -1,22 +1,23 @@
-/*
- * ******************************************************************************
- *  jquery.mb.components
- *  file: jquery.mb.CSSAnimate.js
- *
- *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
- *  Open lab srl, Firenze - Italy
- *  email: matteo@open-lab.com
- *  site: 	http://pupunzi.com
- *  blog:	http://pupunzi.open-lab.com
- * 	http://open-lab.com
- *
- *  Licences: MIT, GPL
- *  http://www.opensource.org/licenses/mit-license.php
- *  http://www.gnu.org/licenses/gpl.html
- *
- *  last modified: 15/03/14 22.47
- *  *****************************************************************************
- */
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.CSSAnimate.js                                                                                                                    _
+ _ last modified: 04/09/14 22.30                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
 
 /*
  * version: 1.6.2
@@ -387,16 +388,16 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		css[sfx + "transition-delay"] = delay + "ms";
 		css[sfx + "transition-style"] = "preserve-3d";
 		css[sfx + "transition-timing-function"] = ease;
-//		css[sfx + "backface-visibility"] = "hidden";
+		//css[sfx + "backface-visibility"] = "hidden";
 
 		setTimeout(function(){
 			$el.one(transitionEnd+"."+el.id, endTransition);
 			$el.css(css);
-
-		},1);
+		},10);
 
 		//if there's no transition than call the callback anyway
 		el.timeout = setTimeout(function () {
+
 			if ($el.called || !callback) {
 				$el.called = false;
 				el.CSSAIsRunning = false;
@@ -411,7 +412,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				el.CSSqueue();
 				el.CSSqueue=null;
 			}
-		}, duration + delay + 100);
+		}, duration + delay + 300);
 	})
 };
 
