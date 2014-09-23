@@ -182,8 +182,6 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 			}
 
-			console.debug("after::  ", opt)
-
 			if (!callback || typeof callback === "string")
 				callback = "linear";
 
