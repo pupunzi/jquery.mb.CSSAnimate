@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.CSSAnimate.js                                                                                                                    _
- _ last modified: 15/09/14 21.45                                                                                                                    _
+ _ last modified: 16/09/14 0.10                                                                                                                     _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -20,7 +20,7 @@
  ___________________________________________________________________________________________________________________________________________________*/
 
 /*
- * version: 1.6.2
+ * version: 1.6.4
  *  params:
 
  @opt        -> the CSS object (ex: {top:300, left:400, ...})
@@ -99,10 +99,10 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		var event = event || {type:"noEvent"};
 
-		if(el.CSSAIsRunning && el.eventType == event.type){
+		if(el.CSSAIsRunning && el.eventType == event.type && !jQuery.browser.msie && jQuery.browser.version<=9){
 			el.CSSqueue = function(){
 				$el.CSSAnimate(opt, duration, delay, ease, callback);
-			}
+			};
 			return;
 		}
 
@@ -147,6 +147,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		if (!jQuery.support.transition) {
 
 			for (var o in opt) {
+
 				if (o === "transform") {
 					delete opt[o];
 				}
@@ -156,10 +157,32 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				if (o === "transform-origin") {
 					delete opt[o];
 				}
+
 				if (opt[o] === "auto") {
 					delete opt[o];
 				}
+
+				if (o === "x") {
+					var val = opt[o];
+					var key = "left";
+					opt[key] = val;
+					delete opt[o];
+				}
+
+				if (o === "y") {
+					var val = opt[o];
+					var key = "top";
+					opt[key] = val;
+					delete opt[o];
+				}
+
+				if (o === "-ms-transform" || o === "-ms-filter") {
+					delete opt[o];
+				}
+
 			}
+
+			console.debug("after::  ", opt)
 
 			if (!callback || typeof callback === "string")
 				callback = "linear";
@@ -393,8 +416,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		//css[sfx + "backface-visibility"] = "hidden";
 
 		setTimeout(function(){
-		$el.one(transitionEnd+"."+el.id, endTransition);
-		$el.css(css);
+			$el.one(transitionEnd+"."+el.id, endTransition);
+			$el.css(css);
 		},0);
 
 		//if there's no transition than call the callback anyway
