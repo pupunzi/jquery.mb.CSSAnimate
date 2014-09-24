@@ -185,7 +185,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			if (!callback || typeof callback === "string")
 				callback = "linear";
 
-			$el.animate(opt, duration, callback);
+			$el.delay(delay).animate(opt, duration, callback);
 			return;
 		}
 
