@@ -71,9 +71,9 @@ jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || j
 
 jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
-	// jQuery.support.transition
+	// jQuery.support.CSStransition
 // to verify that CSS3 transition is supported (or any of its browser-specific implementations)
-	jQuery.support.transition = (function () {
+	jQuery.support.CSStransition = (function () {
 		var thisBody = document.body || document.documentElement;
 		var thisStyle = thisBody.style;
 		return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
@@ -145,7 +145,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		if(!duration)
 			duration = jQuery.fx.speeds["_default"];
 
-		if (!jQuery.support.transition) {
+		if (!jQuery.support.CSStransition) {
 
 			for (var o in opt) {
 				if (o === "transform") {
@@ -373,7 +373,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			clearTimeout(el.timeout);
 			$el.css(sfx + "transition", "");
 			if (typeof callback == "function") {
-				callback($el);
+				callback.apply(el);
 			}
 			el.called = true;
 
@@ -409,7 +409,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			}
 
 			$el.css(sfx + "transition", "");
-			callback($el);
+			callback.apply(el);
 
 			el.CSSAIsRunning = false;
 			if(typeof el.CSSqueue == "function"){
@@ -420,8 +420,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 	})
 };
 
-$.fn.css3 = function(opt, duration, delay, ease, callback){
+$.fn.css3 = function(opt){
 	return this.each(function(){
 		$(this).CSSAnimate(opt,1,0,null);
 	})
-}
+};
