@@ -399,7 +399,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 			if(typeof el.CSSqueue == "function"){
 				el.CSSqueue();
-				el.CSSqueue=null;
+				el.CSSqueue = null;
 			}
 		};
 
@@ -416,7 +416,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		setTimeout(function(){
 			$el.one(transitionEnd+"."+el.id, endTransition);
 			$el.css(css);
-		},0);
+		},1);
 
 		//if there's no transition than call the callback anyway
 		el.timeout = setTimeout(function () {
@@ -433,7 +433,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 			el.CSSAIsRunning = false;
 			if(typeof el.CSSqueue == "function"){
 				el.CSSqueue();
-				el.CSSqueue=null;
+				el.CSSqueue = null;
 			}
 		}, duration + delay + 300);
 
