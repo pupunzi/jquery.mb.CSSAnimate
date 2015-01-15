@@ -122,9 +122,15 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		}
 
 		if (typeof delay == "function") {
+			ease = delay;
+			delay = 0;
+		}
+
+		if (typeof delay == "string") {
 			callback = delay;
 			delay = 0;
 		}
+
 		if (typeof ease == "function") {
 			callback = ease;
 			ease = "cubic-bezier(0.65,0.03,0.36,0.72)";
@@ -143,6 +149,13 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 		if(!duration)
 			duration = jQuery.fx.speeds["_default"];
+
+
+		if (typeof callback === "string"){
+			ease = callback;
+			callback = null
+
+		}
 
 		if (!jQuery.support.CSStransition) {
 
@@ -182,8 +195,6 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 
 			}
 
-			if (!callback || typeof callback === "string")
-				callback = "linear";
 
 			$el.delay(delay).animate(opt, duration, callback);
 			return;
@@ -379,13 +390,19 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				delete opt[o];
 			}
 
+
 			if(prop.indexOf(key)<0)
 				prop.push(uncamel(key));
 		}
 
+		$el.off(transitionEnd+"."+el.id);
+
 		var properties = prop.join(",");
 
 		function endTransition () {
+
+			el.called = true;
+			el.CSSAIsRunning = false;
 
 			$el.off(transitionEnd+"."+el.id);
 			clearTimeout(el.timeout);
@@ -394,8 +411,6 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				callback.apply(el);
 			}
 
-			el.called = true;
-			el.CSSAIsRunning = false;
 
 			if(typeof el.CSSqueue == "function"){
 				el.CSSqueue();
@@ -421,8 +436,8 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 		//if there's no transition than call the callback anyway
 		el.timeout = setTimeout(function () {
 
-			if ($el.called || !callback) {
-				$el.called = false;
+			if (el.called || !callback) {
+				el.called = false;
 				el.CSSAIsRunning = false;
 				return;
 			}
@@ -435,7 +450,7 @@ jQuery.fn.CSSAnimate = function (opt, duration, delay, ease, callback) {
 				el.CSSqueue();
 				el.CSSqueue = null;
 			}
-		}, duration + delay + 300);
+		}, duration + delay + 10);
 
 	})
 };
