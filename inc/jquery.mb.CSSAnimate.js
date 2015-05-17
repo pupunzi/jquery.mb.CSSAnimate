@@ -61,9 +61,7 @@
 
 		var f = uncamel(filter);
 		var fSfx = jQuery.browser.mozilla ? "" : $.CSS.sfx;
-
 		css[fSfx+"filter"] = css[fSfx+"filter"] || "";
-
 		val = setUnit(val > $.CSS.filters[filter].max ? $.CSS.filters[filter].max : val, $.CSS.filters[filter].unit);
 		css[fSfx+"filter"] += f + "(" + val + ") ";
 
@@ -81,8 +79,8 @@
 		sfx : "",
 
 		filters: {
-			blur: {min: 0, max: 0, unit: "px"},
-			brightness: {min: 0, max: 1, unit: ""},
+			blur: {min: 0, max: 100, unit: "px"},
+			brightness: {min: 0, max: 400, unit: "%"},
 			contrast: {min: 0, max: 400, unit: "%"},
 			grayscale: {min: 0, max: 100, unit: "%"},
 			hueRotate: {min: 0, max: 360, unit: "deg"},
