@@ -1,0 +1,25 @@
+{
+  "name": "jquery.mb.CSSAnimate",
+  "version": "2.0.0",
+  "homepage": "https://github.com/pupunzi/jquery.mb.CSSAnimate",
+  "authors": [
+    "pupunzi <matteo@open-lab.com>"
+  ],
+  "description": "This plugin let you animate elements using the CSS3 transition via javascript (jQuery).",
+  "main": "inc/jquery.mb.CSSAnimate.js",
+  "keywords": [
+    "jquery-plugin",
+    "animate",
+    "CSS3",
+    "html5",
+    "transition"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
