@@ -96,6 +96,8 @@ jQuery.CSS = {
 			jQuery.CSS.sfx = "-ms-";
 		}
 
+		jQuery.CSS.sfx = "";
+
 		for(var o in newOpt){
 
 			if (o==="transform"){
