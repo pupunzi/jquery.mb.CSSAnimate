@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "homepage": "https://github.com/pupunzi/jquery.mb.CSSAnimate",
   "authors": [
-    "pupunzi <matteo@open-lab.com>"
+    "pupunzi <matbicoc@gmail.com>"
   ],
   "description": "This plugin let you animate elements using the CSS3 transition via javascript (jQuery).",
   "main": "inc/jquery.mb.CSSAnimate.js",
