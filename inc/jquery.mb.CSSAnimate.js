@@ -56,7 +56,7 @@ function setUnit(i, units) {
 function setFilter (css, filter, val){
 
 	var f = uncamel(filter);
-	var fSfx = jQuery.browser.mozilla ? "" : jQuery.CSS.sfx;
+	var fSfx = jQuery.mbBrowser.mozilla ? "" : jQuery.CSS.sfx;
 	css[fSfx+"filter"] = css[fSfx+"filter"] || "";
 	val = setUnit(val > jQuery.CSS.filters[filter].max ? jQuery.CSS.filters[filter].max : val, jQuery.CSS.filters[filter].unit);
 	css[fSfx+"filter"] += f + "(" + val + ") ";
@@ -88,11 +88,11 @@ jQuery.CSS = {
 	normalizeCss:function(opt){
 		var newOpt = jQuery.extend(true, {}, opt);
 
-		if (jQuery.browser.webkit || jQuery.browser.opera) {
+		if (jQuery.mbBrowser.webkit || jQuery.mbBrowser.opera) {
 			jQuery.CSS.sfx = "-webkit-";
-		} else if (jQuery.browser.mozilla) {
+		} else if (jQuery.mbBrowser.mozilla) {
 			jQuery.CSS.sfx = "-moz-";
-		} else if (jQuery.browser.msie) {
+		} else if (jQuery.mbBrowser.msie) {
 			jQuery.CSS.sfx = "-ms-";
 		}
 
@@ -114,7 +114,7 @@ jQuery.CSS = {
 			 * CSS Filters
 			 * */
 
-			if (o==="filter" && !jQuery.browser.mozilla){
+			if (o==="filter" && !jQuery.mbBrowser.mozilla){
 				newOpt[jQuery.CSS.sfx+"filter"]= opt[o];
 				delete newOpt[o];
 			}
@@ -293,7 +293,7 @@ jQuery.CSS = {
 
 			var event = event || {type:"noEvent"};
 
-			if(el.CSSAIsRunning && el.eventType == event.type && !jQuery.browser.msie && jQuery.browser.version<=9){
+			if(el.CSSAIsRunning && el.eventType == event.type && !jQuery.mbBrowser.msie && jQuery.mbBrowser.version<=9){
 				el.CSSqueue = function(){
 					$el.CSSAnimate(cssObj, duration, delay, ease, callback);
 				};
