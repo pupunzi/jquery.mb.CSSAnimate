@@ -36,8 +36,8 @@
 
 
 jQuery.support.CSStransition = (function () {
-	var thisBody = document.body || document.documentElement;
-	var thisStyle = thisBody.style;
+	const thisBody = document.body || document.documentElement;
+	const thisStyle = thisBody.style;
 	return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
 })();
 
@@ -55,8 +55,8 @@ function setUnit(i, units) {
 
 function setFilter (css, filter, val){
 
-	var f = uncamel(filter);
-	var fSfx = jQuery.mbBrowser.mozilla ? "" : jQuery.CSS.sfx;
+	const f = uncamel(filter);
+	const fSfx = jQuery.mbBrowser.mozilla ? "" : jQuery.CSS.sfx;
 	css[fSfx+"filter"] = css[fSfx+"filter"] || "";
 	val = setUnit(val > jQuery.CSS.filters[filter].max ? jQuery.CSS.filters[filter].max : val, jQuery.CSS.filters[filter].unit);
 	css[fSfx+"filter"] += f + "(" + val + ") ";
@@ -86,7 +86,7 @@ jQuery.CSS = {
 	},
 
 	normalizeCss:function(opt){
-		var newOpt = jQuery.extend(true, {}, opt);
+		const newOpt = jQuery.extend(true, {}, opt);
 
 		if (jQuery.mbBrowser.webkit || jQuery.mbBrowser.opera) {
 			jQuery.CSS.sfx = "-webkit-";
@@ -98,7 +98,7 @@ jQuery.CSS = {
 
 		jQuery.CSS.sfx = "";
 
-		for(var o in newOpt){
+		for(let o in newOpt){
 
 			if (o==="transform"){
 				newOpt[jQuery.CSS.sfx+"transform"]=newOpt[o];
@@ -274,8 +274,8 @@ jQuery.CSS = {
 
 	getProp: function(css){
 
-		var prop = [];
-		for(var key in css){
+		const prop = [];
+		for(let key in css){
 			if(prop.indexOf(key)<0)
 				prop.push(uncamel(key));
 		}
@@ -287,8 +287,8 @@ jQuery.CSS = {
 
 		return this.each(function () {
 
-			var el = this;
-			var $el = jQuery(this);
+			const el = this;
+			const $el = jQuery(this);
 			el.id = el.id || "CSSA_" + new Date().getTime();
 
 			var event = event || {type:"noEvent"};
@@ -394,7 +394,7 @@ jQuery.CSS = {
 				return;
 			}
 
-			var cssEase = {
+			const cssEase = {
 				'default':       'ease',
 				'in':             'ease-in',
 				'out':            'ease-out',
@@ -494,8 +494,8 @@ jQuery.normalizeCss = jQuery.CSS.normalizeCss;
 
 jQuery.fn.css3 = function(prop){
 	return this.each(function(){
-		var $el = jQuery(this);
-		var css = jQuery.normalizeCss(prop);
+		const $el = jQuery(this);
+		const css = jQuery.normalizeCss(prop);
 		$el.css(css);
 	})
 };
